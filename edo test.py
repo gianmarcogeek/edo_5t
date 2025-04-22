@@ -1,28 +1,30 @@
 from pyedo import edo
 import time
 
-myedo = edo('192.168.12.1') # create an instance of an eDO object with IP address
+myedo = edo('10.42.0.49') # create an instance of an eDO object with IP address
 
-x = float
-y = float
+# x = float
+# y = float
 
-### init ###
-myedo.init7Axes() 
-time.sleep(5)
-myedo.disengageStd() # release brakes and movement
-time.sleep(5)
-myedo.calibAxes() # make the zero on the axis (axis should be already aligned)
+# ### Subscription to the topics ###
+# myedo.listenMovementAck() # Movement confirmation topic
+# myedo.listenValues()# Space coordonates (x,y,z,A,E,R) topic
 
 
-### Subscription to the topics ###
-myedo.listenMovementAck() # Movement confirmation topic
-myedo.listenValues()# Space coordonates (x,y,z,A,E,R) topic
+# ### init ###
+# myedo.init7Axes() 
+# time.sleep(5)
+# myedo.disengageStd() # release brakes and movement
+# time.sleep(5)
+# myedo.calibAxes() # make the zero on the axis (axis should be already aligned)
 
-myedo.moveToWaitingPos() # starting point for cartesian moves
+# myedo.moveToWaitingPos() # starting point for cartesian moves
 
-### move function ###
-if x <= 100:
-    myedo.moveCircularX(x, y, 150, 0, 180, 23.57, 60, 250, 400,150, 0, 180, 23.57, 60) 
-else: 
-    myedo.moveCartesianX(x, y, 150, 0, 180, 23.57, 60)
-
+def StartUp(myedo):
+    myedo.init6Axes()
+    time.sleep(5)
+    myedo.disengageSafe()
+    print("daje")
+    time.sleep(40)
+    myedo.calibAxes() # Mandatory in HOME POSITION
+StartUp(myedo)
